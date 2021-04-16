@@ -1,65 +1,66 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { Box, useColorModeValue, Button, Container, Grid, GridItem, Heading } from '@chakra-ui/react';
+import SplitScreen from '../components/Hero';
+import { commerce } from '../lib/commerce';
+import HomeProduct from '../components/HomeProduct';
+import HomeContact from '../components/HomeContact';
+import {useEffect} from 'react';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export async function getStaticProps(){
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    const merchant = await commerce.merchants.about();
+    const { data: products } = await commerce.products.list();
+    // const cart = await commerce.cart.refresh();
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    return {
+        props: {
+            merchant,
+            products,
+            
+        },
+    }
 }
+
+
+const Home = ({ merchant, products}) => {
+
+        
+
+        return(
+            <Box>
+                <SplitScreen />
+                <Box pt={'20px'} w={'100%'} bg={useColorModeValue('gray.200','gray.700')} >
+                    <Container maxW={'container.xl'} >
+                        <Heading textAlign={'center'} as={'h1'} size={'xl'} mb={'20px'} >Featured Products</Heading>
+                        <Grid templateColumns={['repeat(1, 1fr)','repeat(2, 1fr)','repeat(2, 1fr)']} gap={5} >
+                            {products.slice(0, 2).map((product)=>{
+                                
+                                    return(
+                                        <GridItem key={product.id} >
+                                            <HomeProduct product={product} />
+                                        </GridItem>
+                                    )    
+                            })}
+                        </Grid>  
+                    </Container>
+                </Box>
+                <Box>
+                    <HomeContact />
+                </Box>
+                
+                
+                
+                {/* <ProductListing products={products} /> */}
+                {/* <p>Hello World</p> */}
+                {/* <h1>Merchant:</h1>
+                <pre>{JSON.stringify(merchant, null, 2)}</pre>
+                <h1>Products:</h1>
+                <pre>{JSON.stringify(products, null, 2)}</pre> */}
+            </Box>
+        )
+    
+}
+
+Home.layout = 'default'
+
+export default Home;
