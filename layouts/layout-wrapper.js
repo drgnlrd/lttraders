@@ -6,14 +6,14 @@ const layouts = {
     admin: AdminLayout,
 };
 
-const LayoutWrapper = (props) => {
+const LayoutWrapper = (props, {user,setUser}) => {
     const Layout = layouts[props.children.type.layout];
 
     if(Layout != null) {
-        return <Layout {...props}>{props.children}</Layout>
+        return <Layout user={user} setUser={setUser} {...props}>{props.children}</Layout>
     }
 
-    return <DefaultLayout {...props}>{props.children}</DefaultLayout>
+    return <DefaultLayout user={user} setUser={setUser} {...props}>{props.children}</DefaultLayout>
 };
 
 export default LayoutWrapper;

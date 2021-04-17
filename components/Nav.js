@@ -2,6 +2,7 @@ import {
     Box,
     Flex,
     Text,
+    Heading,
     IconButton,
     Button,
     Stack,
@@ -18,6 +19,28 @@ import {
     useColorMode,
     Image,
     chakra,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    Tabs, 
+    TabList, 
+    TabPanels, 
+    Tab, 
+    TabPanel,
+    FormControl,
+    FormLabel,
+    Input,
+    Checkbox,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuDivider,
+    Avatar
 } from '@chakra-ui/react';
 
 import {
@@ -32,15 +55,52 @@ import { useEffect, useState } from 'react'
 
 import { commerce } from '../lib/commerce';
 
+import userbase from 'userbase-js';
+
+import { useRouter } from 'next/router';
+
 
 
 // import { useEffect } from 'react';
+const initialFormData = Object.freeze({
+    username: "",
+    password: "",
+    email: "",
+    
+})
+
+
 
 export default function WithSubnavigation(){
 
     const { isOpen, onToggle } = useDisclosure();
+    const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
+    const getInitialState = () =>{
+        if (typeof window !== 'undefined'){
+            return localStorage.getItem('userbaseCurrentSession');
+        }
+        
+    }
     const [ cart, setCart ] = useState();
+    const [checked, setChecked] = useState(false);
+    const [user, setUser] = useState(getInitialState);
+    const [formData, updateFormData] = useState(initialFormData);
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const [remember, setRemember] = useState('local');
+
+    
+
+    const handleCheck = () => {
+        setChecked(!checked);
+        if(checked === true){
+            setRemember('local');
+        }
+        else{
+            setRemember('none');
+        }
+    };
 
     useEffect(async () => {
         await commerce.cart.retrieve().then((res)=>{
@@ -49,6 +109,81 @@ export default function WithSubnavigation(){
         });
 
     }, []);
+
+    const handleChange=(e)=>{
+        updateFormData({
+            ...formData,
+            [e.target.name]: e.target.value.trim()
+        });
+    }
+
+    const handleSignIn = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        if(checked === true){
+            setRemember('local');
+        }
+        else{
+            setRemember('none');
+        }
+
+        await userbase.signIn({
+            username: formData.username,
+            password: formData.password,
+            rememberMe: remember,
+        }).then((res)=>{
+            setUser(res);
+            console.log(res);
+            setLoading(false)
+            onModalClose();
+        }).catch(error=>{
+            alert(error.message);
+            setLoading(false)
+        })
+
+    }
+
+    const handleSignUp = async (e) => {
+        
+        
+
+        e.preventDefault();
+        setLoading(true);
+
+        if(checked === true){
+            setRemember('local');
+        }
+        else{
+            setRemember('none');
+        }
+
+        await userbase.signUp({
+            username: formData.username,
+            password: formData.password,
+            email: formData.email,
+            rememberMe: remember,
+        }).then((res)=>{
+            setUser(res);
+            console.log(res);
+            setLoading(false)
+            onModalClose();
+        }).catch(error=>{
+            alert(error.message);
+            setLoading(false);
+        })
+    }
+
+    const handleLogout = async () =>{
+        await userbase.signOut().then(()=>{
+            setUser(null);
+            localStorage.removeItem('userbaseCurrentSession');
+            router.reload();
+        }).catch(error=>{
+            alert(error.message);
+        })
+        
+    }
 
     return(
         <Box position={'fixed'} top={0} w={'100%'} zIndex={'99'}>
@@ -63,6 +198,17 @@ export default function WithSubnavigation(){
                 borderColor={useColorModeValue('gray.200', 'gray.900')}
                 align={'center'} 
                 >
+                <SignInModal 
+                    handleChange={handleChange} 
+                    handleSignIn={handleSignIn}
+                    handleSignUp={handleSignUp}
+                    handleCheck={handleCheck}
+                    isLoading={loading}
+                    checked={checked}
+                    onClose={onModalClose} 
+                    onOpen={onModalOpen} 
+                    isOpen={isModalOpen} 
+                />
 
                 <Flex
                     flex={{base: 1, md: 'auto'}}
@@ -128,26 +274,55 @@ export default function WithSubnavigation(){
                             }
                         variant={'ghost'}
                     />
-                    <Button
-                        as={'a'}
-                        fontSize={'sm'}
-                        fontWeight={400}
-                        variant={'link'}
-                        href={'#'}>
-                        Sign In
-                    </Button>
-                    <Button
-                        display={{ base: 'none', md: 'inline-flex' }}
-                        fontSize={'sm'}
-                        fontWeight={600}
-                        color={'white'}
-                        bgGradient={useColorModeValue('linear(to-r, teal.400,green.400)','linear(to-r, red.400,pink.400)')}
-                        href={'#'}
-                        _hover={{
-                            bgGradient: useColorModeValue('linear(to-r, teal.500,green.500)','linear(to-r, red.500,pink.500)'),
-                        }}>
-                        Sign Up
-                    </Button>
+                    {user ? (
+                        <>
+                        <Menu>
+                            <MenuButton
+                                as={Button}
+                                rounded={'full'}
+                                variant={'link'}
+                                cursor={'pointer'}>
+                                <Avatar
+                                size={'sm'}
+                                src={
+                                    'https://toppng.com/uploads/preview/donna-picarro-dummy-avatar-115633298255iautrofxa.png'
+                                }
+                                />
+                            </MenuButton>
+                            <MenuList>
+                                <MenuItem as={'a'} href={'/orders'} >Orders</MenuItem>
+                                <MenuDivider />
+                                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+                            </MenuList>
+                        </Menu>
+                        </>
+                    ) : (
+                        <>
+                        <Button
+                            as={'a'}
+                            fontSize={'sm'}
+                            fontWeight={400}
+                            variant={'link'}
+                            href={'#'}
+                            onClick={onModalOpen}>
+                            Sign In
+                        </Button>
+                        <Button
+                            display={{ base: 'none', md: 'inline-flex' }}
+                            fontSize={'sm'}
+                            fontWeight={600}
+                            color={'white'}
+                            bgGradient={useColorModeValue('linear(to-r, teal.400,green.400)','linear(to-r, red.400,pink.400)')}
+                            href={'#'}
+                            _hover={{
+                                bgGradient: useColorModeValue('linear(to-r, teal.500,green.500)','linear(to-r, red.500,pink.500)'),
+                            }}
+                            onClick={onModalOpen}>
+                            Sign Up
+                        </Button>
+                        </>
+                    )}
+                    
                 </Stack>
             </Flex>
 
@@ -156,6 +331,122 @@ export default function WithSubnavigation(){
             </Collapse>
         </Box>
     );
+}
+
+const SignInModal = ({isOpen, onClose, onOpen, handleChange, handleSignIn, handleSignUp, handleCheck, checked, isLoading}) =>{
+    return(
+        <>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                <ModalBody>
+                    <Tabs isFitted variant={'enclosed'} >
+                        <TabList>
+                            <Tab>Sign In</Tab>
+                            <Tab>Sign Up</Tab>
+                        </TabList>
+
+                        <TabPanels>
+                            <TabPanel>
+                                <Stack spacing={4}>
+                                    <FormControl id="email">
+                                        <FormLabel>User Name</FormLabel>
+                                        <Input 
+                                            name={'username'}
+                                            id={'username'}
+                                            onChange={(e)=>handleChange(e)}
+                                            type="text"
+                                        />
+                                    </FormControl>
+                                    <FormControl id="password">
+                                        <FormLabel>Password</FormLabel>
+                                        <Input name={'password'}
+                                            id={'password'}
+                                            onChange={(e)=>handleChange(e)}
+                                            type="password" />
+                                    </FormControl>
+                                    <Stack spacing={10}>
+                                        <Stack
+                                            direction={{ base: 'column', sm: 'row' }}
+                                            align={'start'}
+                                            justify={'space-between'}>
+                                            <Checkbox onClick={handleCheck} checked={checked} >Remember me</Checkbox>
+                                            <Link color={'blue.400'}>Forgot password?</Link>
+                                        </Stack>
+                                        <Button
+                                            bgGradient={useColorModeValue('linear(to-r, teal.400,green.400)','linear(to-r, red.400,pink.400)')} 
+                                            _hover={{
+                                                bgGradient: useColorModeValue('linear(to-r, teal.500,green.500)','linear(to-r, red.500,pink.500)')
+                                            }}
+                                            color={'white'}
+                                            onClick={(e)=>handleSignIn(e)}
+                                            isLoading={isLoading == true ? true : false}>
+                                            Sign in
+                                        </Button>
+                                        <Button onClick={onClose} >
+                                            Close
+                                        </Button>
+                                    </Stack>
+                                </Stack>
+                            </TabPanel>
+                            <TabPanel>
+                                <Stack spacing={4}>
+                                    <FormControl id="firstname">
+                                        <FormLabel>User Name</FormLabel>
+                                        <Input 
+                                            name={'username'}
+                                            id={'username'}
+                                            onChange={(e)=>handleChange(e)}
+                                            type="text" />
+                                    </FormControl>
+                                    <FormControl id="email">
+                                        <FormLabel>Email address</FormLabel>
+                                        <Input 
+                                            name={'email'}
+                                            id={'email'}
+                                            onChange={(e)=>handleChange(e)}
+                                            type="email"/>
+                                    </FormControl>
+                                    <FormControl id="password">
+                                        <FormLabel>Password</FormLabel>
+                                        <Input 
+                                            name={'password'}
+                                            id={'password'}
+                                            onChange={(e)=>handleChange(e)}
+                                            type="password" />
+                                    </FormControl>
+                                    <Stack spacing={10}>
+                                        <Stack
+                                            direction={{ base: 'column', sm: 'row' }}
+                                            align={'start'}
+                                            justify={'space-between'}>
+                                            <Checkbox checked={checked} onCLick={handleCheck}>Remember me</Checkbox>
+                                            <Link color={'blue.400'}>Forgot password?</Link>
+                                        </Stack>
+                                        <Button
+                                            bgGradient={useColorModeValue('linear(to-r, teal.400,green.400)','linear(to-r, red.400,pink.400)')} 
+                                            _hover={{
+                                                bgGradient: useColorModeValue('linear(to-r, teal.500,green.500)','linear(to-r, red.500,pink.500)')
+                                            }}
+                                            color={'white'}
+                                            onClick={(e)=>handleSignUp(e)}
+                                            isLoading={isLoading == true ? true : false}>
+                                            Sign Up
+                                        </Button>
+                                        <Button onClick={onClose} >
+                                            Close
+                                        </Button>
+                                    </Stack>
+                                </Stack>
+                            </TabPanel>
+                        </TabPanels>
+                    </Tabs>
+                    
+                </ModalBody>
+                </ModalContent>
+            </Modal>
+        </>
+    )
 }
 
 const DesktopNav = () =>{

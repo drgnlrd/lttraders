@@ -313,10 +313,11 @@ const Cart = () => {
                     <Flex alignItems={'flex-end'} direction={'column'} mt={3} >
                             <Button
                                 as={'a'}
-                                bg={useColorModeValue('teal.400','red.400')} 
+                                bgGradient={useColorModeValue('linear(to-r, teal.400,green.400)','linear(to-r, red.400,pink.400)')} 
                                 _hover={{
-                                    bg: useColorModeValue('teal.600','red.600')
+                                    bgGradient: useColorModeValue('linear(to-r, teal.500,green.500)','linear(to-r, red.500,pink.500)')
                                 }}
+                                color={'white'}
                                 href={'/checkout'}
                                 >
                                 Proceed To Checkout
