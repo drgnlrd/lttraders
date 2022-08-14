@@ -60,7 +60,6 @@ import userbase from 'userbase-js';
 import { useRouter } from 'next/router';
 
 
-
 // import { useEffect } from 'react';
 const initialFormData = Object.freeze({
     username: "",
@@ -71,7 +70,7 @@ const initialFormData = Object.freeze({
 
 
 
-export default function WithSubnavigation(){
+export default function WithSubnavigation(props, {categories}) {
 
     const { isOpen, onToggle } = useDisclosure();
     const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
@@ -107,8 +106,11 @@ export default function WithSubnavigation(){
             console.log(res);
             setCart(res);
         });
-
     }, []);
+
+    useEffect(()=>{
+        console.log("Nav Categories:-",categories);
+    }, [categories])
 
     const handleChange=(e)=>{
         updateFormData({
@@ -230,10 +232,10 @@ export default function WithSubnavigation(){
                         fontFamily={'heading'}
                         color={useColorModeValue('gray.800','white')}>
                         <Flex display={{ base: 'none', md: 'flex' }} >
-                            {colorMode == "light" ? <Image src="/ecomlogowhite.png" h="60px" w="auto" /> : <Image src="/ecomlogo.png" h="65px" w="auto" /> }
+                            {colorMode == "light" ? <Image src="/light.png" h="60px" w="auto" /> : <Image src="/dark.png" h="65px" w="auto" /> }
                         </Flex>
                         <Flex display={{ base: 'flex', md: 'none' }} >
-                            <Image src="/ecomlogothumb.png" h="40px" w="auto" />
+                            <Image src="/icons/icon-192x192.png" h="40px" w="auto" />
                         </Flex>
                         
                     </Text>
@@ -599,19 +601,19 @@ const NAV_ITEMS = [
         children: [
             
             {
-                label: 'Cake Boxes',
-                subLabel: 'Made For Bakeries Or Solo Passionists',
-                href: '/categories/cake-boxes',
+                label: 'Bosch',
+                subLabel: 'Accesories And Powertools',
+                href: '/categories/bosch',
             },
             {
-                label: 'Chocolate Boxes',
-                subLabel: 'To Present Your Creations Beautifully',
-                href: '/categories/chocolate-boxes',
+                label: 'Hikoki',
+                subLabel: 'Accessories And Powertools',
+                href: '/categories/hikoki',
             },
             {
-                label: 'Sweet Boxes',
-                subLabel: 'For All Kinds Of Festive Celebrations',
-                href: '/categories/sweet-boxes',
+                label: 'Screws And Anchor Fasteners',
+                subLabel: 'Title Says it all!',
+                href: '/categories/screws-and-anchor-fasteners',
             },
         ],
     },

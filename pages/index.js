@@ -3,28 +3,35 @@ import SplitScreen from '../components/Hero';
 import { commerce } from '../lib/commerce';
 import HomeProduct from '../components/HomeProduct';
 import HomeContact from '../components/HomeContact';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 export async function getStaticProps(){
 
     const merchant = await commerce.merchants.about();
+    const categories = await commerce.categories.list();
     const { data: products } = await commerce.products.list();
     // const cart = await commerce.cart.refresh();
 
-
+    console.log("Merchant",merchant);
+    console.log("Products",products);
+    console.log("Categories",categories);
     return {
         props: {
             merchant,
             products,
-            
+            categories,
         },
     }
 }
 
 
-const Home = ({ merchant, products}) => {
+const Home = ({ merchant, products, categories}) => {
 
-        
+        useEffect(()=>{
+            console.log("Products",products);
+            console.log("Merchant",merchant);
+            console.log("Categories",categories);
+        })
 
         return(
             <Box>
@@ -34,12 +41,11 @@ const Home = ({ merchant, products}) => {
                         <Heading textAlign={'center'} as={'h1'} size={'xl'} mb={'20px'} >Featured Products</Heading>
                         <Grid templateColumns={['repeat(1, 1fr)','repeat(2, 1fr)','repeat(2, 1fr)']} gap={5} >
                             {products.slice(0, 2).map((product)=>{
-                                
-                                    return(
-                                        <GridItem key={product.id} >
-                                            <HomeProduct product={product} />
-                                        </GridItem>
-                                    )    
+                                return(
+                                    <GridItem key={product.id} >
+                                        <HomeProduct product={product} />
+                                    </GridItem>
+                                )    
                             })}
                         </Grid>  
                     </Container>

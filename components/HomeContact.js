@@ -68,11 +68,11 @@ const HomeContact = () =>{
         </Flex>
         <Box>
             <Image
-            src="https://cdn.dribbble.com/users/863227/screenshots/14067334/media/23078a35dad901e984510cb6b800632d.png?compress=1&resize=400x300"
+            src="./bosch.png"
             alt="3 women looking at a laptop"
             fit="cover"
             w="full"
-            h={{ base: 64, md: "full" }}
+            h={{ base: 64, md: 'full' }}
             bg="gray.100"
             loading="lazy"
             />

@@ -97,7 +97,7 @@ export default function ProductCard({ product }){
                             height={230}
                             width={302}
                             objectFit={'cover'}
-                            src={`${product.media.source}`}
+                            src={`${product.image.url}`}
                             cursor={'pointer'}
                         />
                     </Link>

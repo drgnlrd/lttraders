@@ -25,7 +25,7 @@ const HomeProduct = ({ product }) => {
               bgSize="cover"
               bgPos="center"
               style={{
-                backgroundImage: `url(${product.media.source})`,
+                backgroundImage: `url(${product.image.url})`,
               }}
             ></Box>
     

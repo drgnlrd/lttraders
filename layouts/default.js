@@ -17,7 +17,7 @@ import { commerce } from '../lib/commerce';
 //     };
 // }
 
-const DefaultLayout = (props,{user, setUser}) => {
+const DefaultLayout = (props,{user, setUser, categories}) => {
 
     return(
     <>
@@ -34,7 +34,7 @@ const DefaultLayout = (props,{user, setUser}) => {
             <meta name="theme-color" content="#94DDDE"/>
         </Head>
         
-        <WithSubnavigation cart={props.cart} setUser={setUser} user={user} />
+        <WithSubnavigation cart={props.cart} categories={categories} setUser={setUser} user={user} />
         <Box minH={'70vh'} marginTop={'70px'} marginBottom={'30px'}>
             {props.children}
         </Box>
