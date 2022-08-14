@@ -59,7 +59,7 @@ const ProductPage = ({ product }) => {
                 h="auto"
                 py={{base: 0, md: 20}}
                 as={Image}
-                src={`${product.media.source}`}
+                src={`${product.image.url}`}
                 display={{base: 'block', md: 'none'}}
               ></Box>
             <Box order={{ base: "none", md: 2 }} pb={{base: '20px', md: '0px'}} >
@@ -106,7 +106,7 @@ const ProductPage = ({ product }) => {
               h="auto"
               py={20}
               as={Image}
-              src={`${product.media.source}`}
+              src={`${product.image.url}`}
               display={{base: 'none', md: 'block'}}
             ></Box>
           </SimpleGrid>

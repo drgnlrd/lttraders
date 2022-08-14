@@ -70,7 +70,7 @@ const initialFormData = Object.freeze({
 
 
 
-export default function WithSubnavigation(props, {categories}) {
+export default function WithSubnavigation(props) {
 
     const { isOpen, onToggle } = useDisclosure();
     const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
@@ -108,9 +108,6 @@ export default function WithSubnavigation(props, {categories}) {
         });
     }, []);
 
-    useEffect(()=>{
-        console.log("Nav Categories:-",categories);
-    }, [categories])
 
     const handleChange=(e)=>{
         updateFormData({

@@ -200,7 +200,7 @@ const Cart = () => {
                                                 />
                                             </Td>
                                             <Td>
-                                                <Img src={`${item.media.source}`} w={'100%'} maxW={['30vw','10vw']}  h={'auto'} />
+                                                <Img src={`${item.image.url}`} w={'100%'} maxW={['30vw','10vw']}  h={'auto'} />
                                             </Td>
                                             <Td>
                                                 {item.name}

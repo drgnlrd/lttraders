@@ -8,18 +8,12 @@ import {useEffect, useState} from 'react';
 export async function getStaticProps(){
 
     const merchant = await commerce.merchants.about();
-    const categories = await commerce.categories.list();
     const { data: products } = await commerce.products.list();
     // const cart = await commerce.cart.refresh();
-
-    console.log("Merchant",merchant);
-    console.log("Products",products);
-    console.log("Categories",categories);
     return {
         props: {
             merchant,
             products,
-            categories,
         },
     }
 }
