@@ -14,14 +14,14 @@ import { useState, useEffect } from 'react'
 
 // const theme = extendTheme({ config });
 
-const stripePromise = loadStripe('pk_test_xKKLGnVyhPq9KEJXO0X9zAu200A4MGxV7w');
+const stripePromise = loadStripe('pk_test_51LWiVISHI3nKtVvjHQN0Gk1gC35nWltL2f24jWt0hIfCk6bXYN2ceGb2y86mbtDeguTGWWCkMamZOyK3tAF7GX6M00bYVukbyD');
 
 
 function MyApp({ Component, pageProps }) {
   const {user, setUser} = useState();
 
   useEffect(()=>{
-    userbase.init({appId: "b2474a30-9252-410e-bfe7-4591ab7dcfca"})
+    userbase.init({appId: "4a9dd000-9770-4942-a4cb-ea66f330c3af"})
   },[])
 
   return(

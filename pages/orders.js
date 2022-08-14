@@ -16,7 +16,7 @@ const Orders = () => {
             .forEach(key => url.searchParams.append(key, params[key]));
         
         let headers = {
-            "X-Authorization": "sk_test_25977510d7585485bd4985b0a2eaf5beee0da6d198970",
+            "X-Authorization": "sk_test_4599429447c5932cf14ceaf0ab66d7780d69b74fa0cad",
             "Accept": "application/json",
             "Content-Type": "application/json",
         };
