@@ -32,7 +32,7 @@ export default function Contact(){
 
         setIsSending(true);
 
-        await emailjs.sendForm('service_73x9c7p',"template_b3j47wo", e.target, 'user_o1bygbovO86uRNpW8fwqp')
+        await emailjs.sendForm('service_avn0pvc',"template_iby5kcj", e.target, 'CCXe26uO_uksizf7E')
         .then(res=>{
             console.log('====================================');
             console.log(res);
