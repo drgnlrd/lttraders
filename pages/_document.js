@@ -11,7 +11,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head title={'Al-Burhan Print and Pack'} />
+        <Head title={'LT Traders'} />
         <body>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Main />

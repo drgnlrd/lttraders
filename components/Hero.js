@@ -17,7 +17,7 @@ export default function SplitScreen() {
                 alt={'Login Image'}
                 h={'95%'}
                 w={'auto'}
-                src={'/hero-image.png'}
+                src={useColorModeValue('/banner_light.png', 'banner_dark.png')}
                 />
             </Flex>
             <Flex p={8} flex={1} align={'center'} justify={'center'}>
@@ -65,9 +65,9 @@ export default function SplitScreen() {
             <Flex flex={1} display={{base: 'none', md: 'flex'}} justifyItems={'center'} alignItems={'center'} >
                 <Image
                 alt={'Hero Image'}
-                h={'85%'}
+                h={'95%'}
                 w={'auto'}
-                src={'/hero-image.png'}
+                src={useColorModeValue('/banner_light.png', 'banner_dark.png')}
                 />
             </Flex>
         </Stack>

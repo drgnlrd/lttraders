@@ -4,9 +4,9 @@
     "display": "fullscreen",
     "scope": "/",
     "start_url": "/",
-    "name": "Al-Burhan E-Store",
-    "short_name": "Al-Burhan",
-    "description": "Al-Burhan Print and Pack E-commerce",
+    "name": "LT Traders E-Store",
+    "short_name": "LT Traders",
+    "description": "LT Traders E-commerce",
     "icons": [
         {
             "src": "icons/icon-192x192.png",
