@@ -9,11 +9,13 @@ export async function getStaticProps(){
 
     const merchant = await commerce.merchants.about();
     const { data: products } = await commerce.products.list();
+    // const checkout = commerce.checkout.getShippingOptions('chkt_ZM8X5nRYR35pv4')
     // const cart = await commerce.cart.refresh();
     return {
         props: {
             merchant,
             products,
+            // checkout,
         },
     }
 }
@@ -25,6 +27,7 @@ const Home = ({ merchant, products, categories}) => {
             console.log("Products",products);
             console.log("Merchant",merchant);
             console.log("Categories",categories);
+            
         })
 
         return(

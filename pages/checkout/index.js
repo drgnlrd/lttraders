@@ -124,12 +124,20 @@ const CheckoutPage = () =>{
               country: formData.country,
             },
             fulfillment:{
-              shipping_method: 'ship_ZM8X5n6a75pv4q',
+              shipping_method: 'ship_RqEv5xWkkoZz4j',
             },
             payment: {
-              gateway: 'stripe',
-              stripe: {
-                payment_method_id: paymentMethod.id,
+              // gateway: 'stripe',
+              // stripe: {
+              //   payment_method_id: paymentMethod.id,
+              // },
+              gateway: 'test_gateway',
+              card: {
+                number: '4242424242424242',
+                expiry_month: '02',
+                expiry_year: '24',
+                cvc: '123',
+                postal_zip_code: formData.postal_zip_code,
               },
             },
           }).then(async (res) => {

@@ -1,7 +1,10 @@
-import { Flex, Box, SimpleGrid, chakra, Button, Image, useColorModeValue, Text } from '@chakra-ui/react';
+import { useState } from 'react'
+import { Flex, Box, SimpleGrid, chakra, Button, Image, useColorModeValue, Text, useToast } from '@chakra-ui/react';
 import { commerce } from '../../lib/commerce';
 
 export async function getStaticProps({ params }){
+
+    
 
     const { permalink } = params;
 
@@ -30,7 +33,29 @@ export async function getStaticPaths() {
     };
 }
 
+
+
 const ProductPage = ({ product }) => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isPushing, setIsPushing] = useState(false);
+    const toast = useToast();
+
+    const addToCart = async () =>{
+      setIsLoading(true);
+      await commerce.cart.add(product.id, 1).then((res)=>{
+          console.log(res);
+          setIsLoading(false);
+          toast({
+              title: 'Product Added.',
+              description: 'The Product has been added. Go to cart for checkout.',
+              position: 'top',
+              status: 'success',
+              duration: 4000,
+              isClosable: true,
+          })
+      })
+    }
     return (
       <Flex
         bg="gray.600"
@@ -96,7 +121,8 @@ const ProductPage = ({ product }) => {
                 _hover={{ bg: useColorModeValue("teal.600", "red.600") }}
                 color={'white'}
                 as="a"
-                href="#"
+                onClick={()=>addToCart()}
+                isLoading={isLoading === true ? true : false}
               >
                 Add To Cart
               </Button>

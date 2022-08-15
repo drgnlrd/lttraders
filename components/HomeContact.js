@@ -54,6 +54,7 @@ const HomeContact = () =>{
                 w="full"
                 mt={2}
                 color={'white'}
+                as={'a'}
                 variant="solid"
                 bgGradient={useColorModeValue('linear(to-r, teal.400,green.400)','linear(to-r, red.400,pink.400)')}
                 _hover={{
@@ -61,6 +62,7 @@ const HomeContact = () =>{
                 }}
                 size="lg"
                 type="submit"
+                href="/contact"
                 >
                 Get In Touch
                 </Button>
