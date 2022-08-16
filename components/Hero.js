@@ -36,15 +36,16 @@ export default function SplitScreen() {
                         bgGradient: useColorModeValue('linear(to-r, teal.400,green.400)','linear(to-r, red.400,pink.400)'),
                         zIndex: -1,
                     }}>
-                    Package
+                    LT TRADERS
                     </Text>
                     <br />{' '}
                     <Text bgGradient={useColorModeValue('linear(to-r, teal.400,green.400)','linear(to-r, red.400,pink.400)')} as={'span'} bgClip="text" >
-                    Your Dreams
+                    AUTHORIZED DISTRIBUTOR FOR BOSCH AND HIKOKI 
                     </Text>{' '}
                 </Heading>
                 <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-                    LT TRADERS
+                 ALL TYPES OF BOSCH AND HIKOKI POWER-TOOLS AND ACCESSORIES AVAILABLE.
+                 WE ALSO DEAL IN ANCHOR FASTENERS AND ALL TYPES OF SCREWS.
                 </Text>
                 <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
                     <Button

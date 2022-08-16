@@ -36,7 +36,8 @@ const HomeContact = () =>{
                 as={'span'}
                 bgGradient={useColorModeValue("linear(to-r, teal.400,green.400)","linear(to-r, red.400,pink.400)")}
                 bgClip="text">
-                Need Custom Design? Contact Us.
+                Have any dubts?   
+                Contact Us.
             </Text>
             </Heading>
             <chakra.p
