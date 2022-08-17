@@ -97,7 +97,7 @@ export default function Contact(){
                   />
                 ))}
               </AvatarGroup> */}
-              <Image src={useColorModeValue('/icon-512x512.png','/light.png')} w={['50vw','20vw']} />
+              <Image src={useColorModeValue('/light.png','/dark.png')} w={['50vw','20vw']} />
               <Text fontFamily={'heading'} fontSize={{ base: '4xl', md: '6xl' }}>
                 +
               </Text>
