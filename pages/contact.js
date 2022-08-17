@@ -70,7 +70,7 @@ export default function Contact(){
                 bgClip="text">
                 &
               </Text>{' '}
-              Design your packaging dream!
+              And get your Required tools at your DOOR STEP
             </Heading>
             <Stack direction={'row'} spacing={4} align={'center'}>
               {/* <AvatarGroup>
@@ -97,7 +97,7 @@ export default function Contact(){
                   />
                 ))}
               </AvatarGroup> */}
-              <Image src={useColorModeValue('/ecomlogowhite.png','/ecomlogo.png')} w={['50vw','20vw']} />
+              <Image src={useColorModeValue('/icon-512x512.png','/light.png')} w={['50vw','20vw']} />
               <Text fontFamily={'heading'} fontSize={{ base: '4xl', md: '6xl' }}>
                 +
               </Text>

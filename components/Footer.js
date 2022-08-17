@@ -78,7 +78,7 @@ export default function SmallFooter() {
                     spacing={4}
                     justify={{base:'center',md:'space-between'}}
                     align={{base:'center',md:'center'}}>
-                    <Text textAlign={['center', 'left']} >&copy; 2020 LT Traders. All Rights Reserved. </Text>
+                    <Text textAlign={['center', 'left']} >&copy; 2022 LT Traders. All Rights Reserved. </Text>
                     <Stack direction={'row'} spacing={8} >
                         <Stack direction={'row'} spacing={6}>
                             <SocialButton label={'Twitter'} href={'#'}>
